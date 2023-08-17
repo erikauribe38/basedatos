@@ -1,0 +1,71 @@
+
+marca {
+	id varchar(55) pk increments
+	marca varchar(55)
+	precio int(20)
+	descuentos varchar(55)
+	potencia varchar(55)
+	trasmicion varchar(55)
+	modelo int(10)
+}
+
+marcas {
+	id-marca varchar(55)
+	ford varchar(55) pk increments
+	mazda varchar(55)
+	toyota int(20)
+	chevrolet varchar(55)
+	renoult varchar(55)
+}
+
+modelos {
+	id varchar(100) pk increments
+	2020 varchar(55)
+	2021 varchar(55)
+	2022 varchar(55)
+	2023 varchar(55)
+	2024 varchar(55)
+}
+
+equipamiento {
+	id-equipamiento numeric pk increments
+	Airbags boolean(55)
+	pintura varchar(55)
+	cogineria varchar(55)
+	Aire varchar(55)
+	Audio varchar(55)
+	Rin varchar(55)
+}
+
+Concecionario {
+	id-cocesionario integer pk increments
+	id_vendedor varchar >* vendedor.id
+	id-zona varchar >* zonas.id-zonas
+	id-stock tinyint
+}
+
+vendedor {
+	id integer pk increments
+	nombre varchar(55) pk increments
+	codigo varchar(55) pk increments
+	vitrina varchar(55) pk increments
+}
+
+ventas {
+	id integer pk increments
+	precio integer
+	modo integer
+	equipamiento integer
+	fecha integer
+	matricula integer
+	stock integer
+	vitrina integer
+}
+
+stock {
+	id-stock integer pk increments *>* Concecionario.id-stock
+	id-marcas integer *> marcas.id-marca
+	id-modelos integer
+	integer
+}
+
