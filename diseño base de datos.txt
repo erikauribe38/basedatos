@@ -1,0 +1,57 @@
+modelos {
+	id-modelo integer pk increments >* Equipamiento.id-equipamiento
+	2020 varchar(55)
+	2021 varchar(55)
+	2023 varchar(55)
+	2024 varchar(55)
+}
+
+Equipamiento {
+	id-equipamiento numeric pk increments
+	Airbags boolean
+	pintura varchar(55)
+	cogineria varchar(55)
+	luces varchar(55)
+	Aire varchar(55)
+	Audio varchar(55)
+	Rin varchar(55)
+}
+
+Concecionario {
+	id-concesionario integer pk increments
+	id-vendedor integer >* vendedor.id
+	id-zona integer >* zonas.id-zonas
+	id-stock integer *>* Stock.id-stock
+}
+
+vendedor {
+	id integer pk increments
+	nombre varchar(55)
+	codigo varchar(55) >* ventas.id
+	vitrina varchar(55)
+}
+
+ventas {
+	id integer pk increments >* marca.id
+	modo integer
+	fecha integer
+	Matricula integer
+	Stock integer
+	infocompra integer > infocompra.id
+}
+
+Stock {
+	id-stock integer pk increments *>* Concecionario.id-stock
+	id-marcas integer
+	id-modelo integer
+}
+
+infocompra {
+	id varchar(55) pk increments
+	marca varchar(55) > marcas.id-marca
+	precio int(20)
+	descuento varchar(55)
+	potencia varchar(55)
+	trasmicion varchar(55)
+	modelo int(10) > modelos.id-modelo
+}
