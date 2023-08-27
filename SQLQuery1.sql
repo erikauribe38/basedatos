@@ -1,79 +1,84 @@
 CREATE DATABASE consecionario;
 
+-- Tabla de Marcas
+CREATE TABLE Marcas (
+    id_marca INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(50) NOT NULL
+);
 
-create table marcas (
-	id_marca varchar(55)not null,
-	ford varchar(55)not null,
-	mazda varchar(20)not null,
-	toyota varchar(55)not null,
-	chebrolet varchar(55)not null,
-	renout varchar(55)not null,
-	constraint pk_marcas primary key (id_marca)
-)
+-- Tabla de Modelos
+CREATE TABLE Modelos (
+    id_modelo INT PRIMARY KEY NOT NULL,
+    id_marca INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL(10, 2),
+    descuento DECIMAL(10, 2),
+    potencia_fiscal INT,
+    cilindrada DECIMAL(6, 2),
+    FOREIGN KEY (id_marca) REFERENCES Marcas(id_marca)
+);
 
-create table modelos (
-	id_modelo int identity(1,1) not null,
-	dosmil_veinte varchar(55) not null,
-	dosmil_ventiuno varchar(55)not null,
-	dosmil_ventidos varchar(55)not null,
-	dosmil_veintitres varchar(55)not null,
-	constraint pk_modelos primary key (id_modelo)
-)
+-- Tabla de Equipamiento
+CREATE TABLE Equipamiento (
+    id_equipamiento INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(100) NOT NULL
+);
 
-create table Equipamiento (
-	id_equipamiento int identity (1,1) not null,
-	Airbags varchar (55) not null,
-	pintura varchar(55) not null,
-	cogineria varchar(55) not null,
-	luces varchar(55) not null,
-	Aire varchar(55) not null,
-	Audio varchar(55) not null,
-	Rin varchar(55) not null,
-	constraint pk_Equipamiento primary key (id_equipamiento)
-)
+-- Tabla de Extras
+CREATE TABLE Extras (
+    id_extra INT PRIMARY KEY NOT NULL,
+    id_modelo INT NOT NULL,
+    id_equipamiento INT NOT NULL,
+    precio_extra DECIMAL(10, 2),
+    FOREIGN KEY (id_modelo) REFERENCES Modelos(id_modelo),
+    FOREIGN KEY (id_equipamiento) REFERENCES Equipamiento(id_equipamiento)
+);
 
-create table Concecionario (
-	id_concesionario int identity (1,1) not null,
-	id_vendedor varchar (55) not null,
-	id_zona varchar (55) not null,
-	id_stock varchar (55) not null,
-	constraint pk_Concecionario primary key (id_concesionario)
-)
+-- Tabla de Automóviles en Stock
+CREATE TABLE Stock (
+    numero_bastidor INT PRIMARY KEY NOT NULL,
+    id_modelo INT NOT NULL,
+    ubicacion VARCHAR(100) NOT NULL,
+    FOREIGN KEY (id_modelo) REFERENCES Modelos(id_modelo)
+);
 
-create table vendedor (
-    id_vendedor int identity (1,1) not null,
-	nombre varchar(55) not null,
-	codigo varchar(55) not null,
-	vitrina varchar(55) not null,
- constraint pk_vendedor primary key (id_vendedor)
- )
+-- Tabla de Servicios Oficiales
+CREATE TABLE ServiciosOficiales (
+    id_servicio INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    domicilio VARCHAR(200),
+    NIF VARCHAR(20)
+);
 
-create table ventas (
-	id_ventas int identity (1,1) not null,
-	modo varchar (55) not null,
-	fecha varchar (55) not null,
-	Matricula varchar (55) not null,
-	Stock varchar (55) not null,
-	infocompra varchar (55) not null,
-	constraint pk_ventas primary key (id_ventas)
-)
+-- Tabla de Vendedores
+CREATE TABLE Vendedores (
+    id_vendedor INT PRIMARY KEY NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    NIF VARCHAR(20),
+    domicilio VARCHAR(200)
+);
 
-create table Stock (
-	id_stock int identity (1,1) not null,
-	id_marcas varchar (55) not null,
-	id_modelo varchar (55) not null,
-	constraint pk_Stock primary key (id_stock)
-	)
+-- Tabla de Ventas
+CREATE TABLE Ventas (
+    id_venta INT PRIMARY KEY NOT NULL,
+    id_automovil INT NOT NULL,
+    id_vendedor INT NOT NULL,
+    id_servicio INT NOT NULL,
+    precio_venta DECIMAL(10, 2),
+    modo_pago VARCHAR(20),
+    fecha_entrega DATE,
+    matricula VARCHAR(20),
+    es_stock BIT,
+    FOREIGN KEY (id_automovil) REFERENCES Stock(numero_bastidor),
+    FOREIGN KEY (id_vendedor) REFERENCES Vendedores(id_vendedor),
+    FOREIGN KEY (id_servicio) REFERENCES ServiciosOficiales(id_servicio)
+);
 
-create table infocompra (
-	id_infocompra int identity(1,1) not null, 
-	marca varchar(55)not null,
-	precio varchar (55) null,
-	descuento varchar(55)not null,
-	potencia varchar(55) not null,
-	trasmicion varchar(55)not null,
-	constraint pk_infocompra primary key (id_infocompra)
-	)
-
-alter table ventas
-add codigo_vend varchar (55) not null;
+-- Tabla de Extras Vendidos
+CREATE TABLE ExtrasVendidos (
+    id_venta INT NOT NULL,
+    id_extra INT NOT NULL,
+    precio_extra DECIMAL(10, 2),
+    FOREIGN KEY (id_venta) REFERENCES Ventas(id_venta),
+    FOREIGN KEY (id_extra) REFERENCES Extras(id_extra)
+);
