@@ -1,44 +1,52 @@
-insert into vendedor(nombre,codigo,vitrina)
-values ('carlos','01','Medellin'),
-('juan','02','Envigado'),
-('maria','03','Bello');
-select * from vendedor;
+-- Insertar datos en la tabla Marcas
+INSERT INTO Marcas (id_marca, nombre) VALUES
+    (1, 'Audi'),
+    (2, 'Volkswagen');
 
-insert into ventas(modo,fecha,Matricula,Stock,infocompra,codigo_vend)
-values ('Contado','22/06/2023','cffk 33','300','01','01'),
-('Financiera','22/06/2023','cfbk 33','299','01','02'),
-('Contado','22/06/2023','cfck 33','298','01','03'),
-('Financiera','22/06/2023','cfak 33','297','01','01'),
-('Contado','22/06/2023','cfak 38','298','01','02'),
-('Financiera','22/06/2023','cfqk 37','297','01','03'),
-('Financiera','22/06/2023','cfqk 36','296','01','03');
-select *from ventas
+-- Insertar datos en la tabla Modelos
+INSERT INTO Modelos (id_modelo, id_marca, nombre, precio, descuento, potencia_fiscal, cilindrada) VALUES
+    (1, 1, 'Audi A3', 30000, 0.05, 10, 2000),
+    (2, 2, 'VW Golf', 28000, 0.1, 8, 1800);
 
+-- Insertar datos en la tabla Equipamiento
+INSERT INTO Equipamiento (id_equipamiento, nombre) VALUES
+    (1, 'Airbag Conductor'),
+    (2, 'Cierre Centralizado'),
+    (3, 'Aire Acondicionado'),
+    (4, 'Airbag Acompañante'),
+    (5, 'Pintura Metalizada');
 
-insert into infocompra(marca,precio,descuento,potencia,trasmicion)
-values ('ford','60.000.000','10%','300','automatico'),
-('ford','60.000.000','10%','300','automatico'),
-('toyota','30.000.000','5%','150','automatico'),
-('mazda','80.000.000','1%','255','automatico'),
-('renout','25.000.000','0%','110','manual'),
-('ford','120.000.000','10%','300','automatico'),
-('audi','90.000.000','10%','300','automatico');
-select *from infocompra
+-- Insertar datos en la tabla Extras
+INSERT INTO Extras (id_extra, id_modelo, id_equipamiento, precio_extra) VALUES
+    (1, 1, 1, 500),
+    (2, 1, 2, 300),
+    (3, 2, 1, 450),
+    (4, 2, 3, 1000),
+    (5, 2, 4, 600),
+    (6, 2, 5, 400);
 
+-- Insertar datos en la tabla Stock
+INSERT INTO Stock (numero_bastidor, id_modelo, ubicacion) VALUES
+    (10001, 1, 'Concesionario Principal'),
+    (10002, 2, 'Servicio Oficial A'),
+    (10003, 2, 'Servicio Oficial B');
 
-insert into Equipamiento(Airbags,pintura,cogineria,luces,Aire,Audio,Rin)
-values ('2','rojo','cuero','led','si','8','18'),
-('3','negro','cuero vegano','alogeno','no','4','17'),
-('2','blanco','cuero','led','si','8','18'),
-('3','rojo','cuero sintetico','led','si','8','17'),
-('2','gris','tela','led','si','8','18'),
-('2','negro','cuero','led','si','8','17'),
-('2','blanco','cuero','led','si','8','19'),
-('2','gris','cuero','led','si','8','17'),
-('8','azul','cuero','led','si','8','21');
-select *from Equipamiento
+-- Insertar datos en la tabla ServiciosOficiales
+INSERT INTO ServiciosOficiales (id_servicio, nombre, domicilio, NIF) VALUES
+    (1, 'Servicio Oficial A', 'Calle A, 123', '12345678A'),
+    (2, 'Servicio Oficial B', 'Calle B, 456', '98765432B');
 
+-- Insertar datos en la tabla Vendedores
+INSERT INTO Vendedores (id_vendedor, nombre, NIF, domicilio) VALUES
+    (1, 'Juan Pérez', '11111111X', 'Calle Principal, 789'),
+    (2, 'María Gómez', '22222222Y', 'Calle Secundaria, 567');
 
+-- Insertar datos en la tabla Ventas
+INSERT INTO Ventas (id_venta, id_automovil, id_vendedor, id_servicio, precio_venta, modo_pago, fecha_entrega, matricula, es_stock) VALUES
+    (1, 10001, 1, 2, 28000, 'Contado', '2023-08-27', 'AB123CD', 1),
+    (2, 10002, 1, 1, 27000, 'Financiera', '2023-08-28', 'EF456GH', 0);
 
-
-
+-- Insertar datos en la tabla ExtrasVendidos
+INSERT INTO ExtrasVendidos (id_venta, id_extra, precio_extra) VALUES
+    (1, 1, 500),
+    (2, 2, 300);
